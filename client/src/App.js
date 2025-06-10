@@ -12,7 +12,7 @@ function App() {
     setStory('');
 
     try {
-      const response = await fetch('http://localhost:5000/generate-story', {
+      const response = await fetch('https://dreamscribe-backend.onrender.com/generate-story', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ genre, character, summary })
