@@ -6,7 +6,12 @@ const axios = require('axios');
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// 🔧 CORS Ayarı — Vercel frontend'in adresini ekledik
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://genai-story-creator.vercel.app']
+}));
+
 app.use(express.json());
 
 // Groq API ayarları
@@ -17,7 +22,7 @@ app.post('/generate-story', async (req, res) => {
   const { genre, character, summary } = req.body;
 
   const prompt = `
-Aşağıda verilen bilgilerle TÜRKÇE olarak  çok kısa bir hikaye yazmanı istiyorum. Hikaye giriş, gelişme ve sonuç bölümlerinden oluşsun fakat prompt çıktısında buna yer verme. Anlatım dili sade, yaratıcı ve akıcı olsun.
+Aşağıda verilen bilgilerle TÜRKÇE olarak çok kısa bir hikaye yazmanı istiyorum. Hikaye giriş, gelişme ve sonuç bölümlerinden oluşsun fakat prompt çıktısında buna yer verme. Anlatım dili sade, yaratıcı ve akıcı olsun.
 
 Tür: ${genre}
 Karakter: ${character}
@@ -25,8 +30,6 @@ Konu: ${summary}
 
 Lütfen sadece hikayeyi yaz. Başka açıklama verme.
 `;
-
-
 
   try {
     const response = await axios.post(
